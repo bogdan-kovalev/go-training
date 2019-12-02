@@ -17,7 +17,7 @@ func TestCreateTaskHandlerPositive(t *testing.T) {
 	req, _ := http.NewRequest("POST", "/createTask", bytes.NewBuffer(requestBody))
 
 	rr := httptest.NewRecorder()
-	handler := http.HandlerFunc(CreateTaskHandler)
+	handler := http.HandlerFunc(CreateTaskHandler(make(map[string]CompletedTask)))
 
 	handler.ServeHTTP(rr, req)
 
@@ -32,7 +32,7 @@ func TestCreateTaskHandlerNegative(t *testing.T) {
 	req, _ := http.NewRequest("POST", "/createTask", bytes.NewBuffer(requestBody))
 
 	rr := httptest.NewRecorder()
-	handler := http.HandlerFunc(CreateTaskHandler)
+	handler := http.HandlerFunc(CreateTaskHandler(make(map[string]CompletedTask)))
 
 	handler.ServeHTTP(rr, req)
 
@@ -47,7 +47,7 @@ func TestGetTaskHandlerPositive(t *testing.T) {
 	req, _ := http.NewRequest("GET", "/getTask/1", nil)
 
 	rr := httptest.NewRecorder()
-	handler := http.HandlerFunc(GetResultHandler)
+	handler := http.HandlerFunc(GetResultHandler(make(map[string]CompletedTask)))
 
 	handler.ServeHTTP(rr, req)
 

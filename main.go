@@ -1,6 +1,8 @@
 package main
 
 import (
+	"encoding/json"
+	"fmt"
 	"github.com/gorilla/mux"
 	"log"
 	"net/http"
@@ -9,6 +11,12 @@ import (
 type Task struct {
 	Start string
 	End   string
+}
+
+type TaskResult struct {
+	Start string
+	End   string
+	Steps []string
 }
 
 func main() {
@@ -37,4 +45,10 @@ func CreateTaskHandler(responseWriter http.ResponseWriter, request *http.Request
 
 func GetResultHandler(writer http.ResponseWriter, request *http.Request) {
 	dumpRequest(request)
+	var taskResult TaskResult
+	taskResult.Start = "url1"
+	taskResult.End = "url2"
+	taskResult.Steps = append(taskResult.Steps, taskResult.Start, taskResult.End)
+	responseBody, _ := json.Marshal(taskResult)
+	_, _ = fmt.Fprintf(writer, string(responseBody))
 }
